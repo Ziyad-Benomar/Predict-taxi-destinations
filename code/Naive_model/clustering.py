@@ -48,8 +48,6 @@ arrivals = np.concatenate((arrivals_np, labels[:,None]), axis=1)
 arrivals = pd.DataFrame(data=arrivals, columns=['lon', 'lat', 'cluster'])
 arrivals.to_csv("arrivals_clustering.csv", index=False)
 
-
-
 #---------------------------------------------------------------------
 ## Visualization
 #----------------------------------------------------------------------

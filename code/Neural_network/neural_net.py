@@ -6,24 +6,15 @@ import numpy as np
 import matplotlib.pyplot as plt
 from tqdm import tqdm 
 tqdm.pandas()
-
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-
 import time
-
-
-
-
-
 
 #---------------------------------------------------------------------
 ## Functions for Loading Data
 #---------------------------------------------------------------------
-
 # Load a block of data
-
 def load_datablock(i) :
     """
     Loads the i-th block of data, shuffles it and returns it
@@ -32,9 +23,7 @@ def load_datablock(i) :
     df = pd.read_csv(filename)
     return df.sample(df.shape[0])
 
-
 # Load data, shuffle it and save it to blocks 
-
 def shuffle_data(num_blocks, block_size=32000) :
     """
     Reads the clean data, shuffles it, and then saves it into several data blocks
@@ -52,7 +41,6 @@ def shuffle_data(num_blocks, block_size=32000) :
     tf = time.time()
     return tf-ti
     
-
 # Transform data to tensors
 def dataframe_to_tensor(df, cuda=True) :
     """
@@ -75,26 +63,17 @@ def get_minibatch(df, i, batch_size=32) :
     """
     # Get a batch dataframe (the shuffling was made before on the entire block)
     df_batch = df.iloc[i*batch_size:(i+1)*batch_size]
-
     # Extract the destination point
     dest = dataframe_to_tensor(df_batch[["x_DEST","y_DEST"]])
     df_batch = df_batch.drop(["x_DEST","y_DEST"], axis=1)
-
     # Get meta data and trajectory data
     meta = dataframe_to_tensor(df_batch[metacolumns]).long()
-    traj = dataframe_to_tensor(df_batch.drop(metacolumns, axis=1))
-    
+    traj = dataframe_to_tensor(df_batch.drop(metacolumns, axis=1)) 
     return meta, traj, dest
-
-
-
-
-
 
 #---------------------------------------------------------------------
 ## The Neural Network and the LOss Function
 #---------------------------------------------------------------------
-
 # Auxilary function : get the size of embeddings
 def get_metadata_num_values() :
     with open('Encoders/encoders.json', 'rb') as file:
@@ -190,10 +169,8 @@ class MyNet(nn.Module):
         return x
 
 
-
 # Equirectangular distance
 # x=longitude, y=latitude
-
 relu = nn.ReLU()
 
 def loss_equirec(Y1,Y2) :
@@ -224,7 +201,3 @@ def my_mse(Y1, Y2) :
     loss_vect = torch.sqrt(relu(term1 + term2))
     loss = 6371*torch.mean(loss_vect)
     return loss
-
-
-
-

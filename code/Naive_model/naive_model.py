@@ -12,8 +12,6 @@ from haversine import haversine
 from tqdm import tqdm 
 tqdm.pandas()
 
-
-
 #---------------------------------------------------------------------
 ## The Haversine distance
 #----------------------------------------------------------------------
@@ -22,10 +20,6 @@ from haversine import haversine as hv_lat_lon
 # (latitude, longitude). Therfeore we need to reverse the coordinates when computing the distance. We define the function:
 def haversine(M, P) :
     return hv_lat_lon(M[::-1], P[::-1])
-
-
-
-
 
 #---------------------------------------------------------------------
 ## Functions for the bearing
@@ -45,10 +39,6 @@ def get_traj_bearing(traj) :
 def sin_error(x) :
     return abs(np.sin(x/2))
 
-
-
-
-
 #---------------------------------------------------------------------
 ## Predicting functions
 #----------------------------------------------------------------------
@@ -57,7 +47,6 @@ def sin_error(x) :
 #----------------------------------------------------------------------
 def naive_pred(row):
     return row.POLYLINE[-1]
-
 
 # prediction = average point of centroids having the "good" bearing 
 #----------------------------------------------------------------------
@@ -84,8 +73,6 @@ def bearing_pred(row, cluster_centers, min_len=40, threshold=0.5) :
     lon_pred = close_centers[:,0].mean()
     lat_pred = close_centers[:,1].mean()
     return lon_pred, lat_pred
-
-
 
 # prediction = weighted average point of centroids having the 
 # "good" bearing, where weights depend on the distance from the
@@ -157,9 +144,6 @@ def bearing_length_pred(row, cluster_centers, lengths, alpha=1, threshold=0.86, 
     lat_pred = np.average(close_centers[:,1], weights=weights)
     return lon_pred, lat_pred
 
-
-
-
 #----------------------------------------------------------------------
 # Compute the loss on a test dataframe given a prediction function 
 #----------------------------------------------------------------------
@@ -172,9 +156,6 @@ def compute_loss(test_df, test_sol, pred_fctn=naive_pred, params={}) :
         arrival = [test_sol.iloc[i].LONGITUDE, test_sol.iloc[i].LATITUDE]
         loss.append(haversine(arrival, arrival_pred))
     return loss
-
-
-
 
 #----------------------------------------------------------------------
 # Running the improved naive model (weighted average)

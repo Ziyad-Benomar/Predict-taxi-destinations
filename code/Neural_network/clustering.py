@@ -25,7 +25,6 @@ arrivals = arrivals["POLYLINE"].progress_apply(lambda x : get_arrival(x))
 arrivals_np = np.vstack(arrivals)
 print("Number of points: ", arrivals.shape[0])
 
-
 #---------------------------------------------------------------------
 ## KMeans Clustering
 #----------------------------------------------------------------------
@@ -50,8 +49,6 @@ df_centers.to_csv("Clustering/cluster_centers.csv")
 arrivals = np.concatenate((arrivals_np, labels[:,None]), axis=1)
 arrivals = pd.DataFrame(data=arrivals, columns=['lon', 'lat', 'cluster'])
 arrivals.to_csv("Clustering/arrivals_clustering.csv", index=False)
-
-
 
 #---------------------------------------------------------------------
 ## Visualization

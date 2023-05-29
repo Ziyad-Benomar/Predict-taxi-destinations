@@ -6,8 +6,6 @@ import numpy as np
 from tqdm import tqdm 
 tqdm.pandas()
 
-
-
 #---------------------------------------------------------------------
 ## Process data for the neural net
 ### Auxilary functions
@@ -73,12 +71,6 @@ def save_scaling_factors(xmin, xmax, ymin, ymax) :
             file.write(str(val)+'\n')
         file.close()
 
-
-
-
-
-
-
 #---------------------------------------------------------------------
 ### The main preprocessing function
 #----------------------------------------------------------------------
@@ -124,10 +116,6 @@ def process(df, M=4, k=5) :
     
     return df
 
-
-
-
-
 #---------------------------------------------------------------------
 ## Processing the data and saving it
 #----------------------------------------------------------------------
@@ -149,10 +137,6 @@ for i in range(4) :
     data = process(data,M=M,k=k)
     # Save the data
     data.to_csv("../CleanData/train_ready.csv", mode='a', header=(i==0), index=False)
-
-
-
-
 
 #---------------------------------------------------------------------
 ## Shuffle the data and save it again
